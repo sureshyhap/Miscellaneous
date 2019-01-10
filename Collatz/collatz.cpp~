@@ -1,0 +1,13 @@
+#include <iostream>
+
+int collatz(int n);
+
+int main(int argc, char* argv[]) {
+
+  
+  return 0;
+}
+
+int collatz(int n) {
+  
+}

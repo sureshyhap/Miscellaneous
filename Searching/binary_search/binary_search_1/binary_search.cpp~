@@ -1,0 +1,63 @@
+#include <iostream>
+
+bool binary_search(int a[], int size, int looking_for, int low = 0, int high = size - 1);
+
+int main(int argc, char* argv[]) {
+  int arr[7] = {6, 8, 9, 10, 22, 36, 41};
+  int arr2[6] = {6, 8, 9, 10, 22, 36};
+  std::cout << binary_search(arr, 7, 25) << std::endl;
+  std::cout << binary_search(arr2, 6, 36) << std::endl;
+  
+  return 0;
+}
+
+// Assumes the array is sorted
+// Returns 0 if not found
+// Returns 1 if found
+bool binary_search(int a[], int size, int looking_for, int low; int high) {
+
+  if (size == 2) {
+    if (a[0] == looking_for) {
+      return true;
+    }
+    if (a[1] == looking_for) {
+      return true;
+    }
+    return false;
+  }
+
+  if (size == 1) {
+    if (a[0] == looking_for) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  // Even number of elements
+  if (size % 2 == 0) {
+    if (a[size / 2] == looking_for) {
+      return true;
+    }
+    else if (a[size / 2] < looking_for) {
+      binary_search((a + (size / 2 + 1)), (size / 2) - 1, looking_for);
+    }
+    else if (a[size / 2] > looking_for) {
+      binary_search(a, (size / 2), looking_for);
+    }
+  }
+  
+  // Odd number of elements
+  else {
+    if (a[size / 2] == looking_for) {
+      return true;
+    }
+    else if (a[size / 2] < looking_for) {
+      binary_search((a + (size / 2 + 1)), (size / 2), looking_for);
+    }
+    else if (a[size / 2] > looking_for) {
+      binary_search(a, (size / 2), looking_for);
+    }
+  }
+}
