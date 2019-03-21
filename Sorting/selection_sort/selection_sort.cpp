@@ -14,8 +14,7 @@ int main(int argc, char* argv[]) {
 
 void selection_sort(int a[], int size) {
   for (int j = 0; j < size; ++j) {
-    int i = 0, max = a[0], max_index = 0;
-    
+    int i = 0, max = a[0], max_index = 0;    
     for (; i < size - j; ++i) {
       if (a[i] > max) {
 	max = a[i];

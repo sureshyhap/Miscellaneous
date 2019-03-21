@@ -1,9 +1,12 @@
 #include <iostream>
+#include <string>
+#include <fstream>
+#include <sstream>
 #include "SuDoku.h"
 
 int main(int argc, char* argv[]) {
   /*
-  // Puzzle 10,152,324,601
+  // Easy Puzzle 10,152,324,601
   int a[SuDoku::SIZE][SuDoku::SIZE] =
     { {5, 6, 0, 4, 9, 0, 7, 0, 0},
 	{0, 0, 1, 0, 5, 0, 0, 0, 0},
@@ -17,7 +20,20 @@ int main(int argc, char* argv[]) {
   };
   */
   int a[SuDoku::SIZE][SuDoku::SIZE] = {{0}};
-  ////////////////// Enter from a file
+  std::string s;
+  std::cout << "Enter the input file name: ";
+  std::cin >> s;
+  std::ifstream infile(s);
+  std::string row;
+  getline(infile, row);
+  for (int i = 0; i < SuDoku::SIZE; ++i) {
+    getline(infile, row);
+    std::istringstream is(row);
+    for (int j = 0; j < SuDoku::SIZE; ++j) {
+      is >> a[i][j];
+    }
+  }
+  /*
   std::cout << "Enter blanks as 0s." << std::endl;
   for (int i = 0; i < SuDoku::SIZE; ++i) {
     std::cout << "Enter ";
@@ -55,9 +71,10 @@ int main(int argc, char* argv[]) {
       std::cin >> a[i][j];
     }
   }
-  SuDoku s(a);
-  s.print();
-  s.solve();
-  s.print();
+  */
+  SuDoku sudoku(a);
+  sudoku.print();
+  sudoku.solve();
+  sudoku.print();
   return 0;
 }

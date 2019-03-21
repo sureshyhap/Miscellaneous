@@ -49,6 +49,10 @@ void SuDoku::solve() {
 	  check_column(i, j);
 	  check_box(i, j);
 	  ///////////////////////////////////////////////
+	  check_row_possibilities(i, j);
+	  check_column_possibilities(i, j);
+	  check_box_possibilities(i, j);
+	  ///////////////////////////////////////////////
 	  const bool* poss = puzzle[i][j].get_possibilities();
 	  int num_possibilities = SuDoku::SIZE;
 	  int possible_num = 0;
@@ -66,7 +70,7 @@ void SuDoku::solve() {
 	    for (int a = 1; a <= SuDoku::SIZE; ++a) {
 	      puzzle[i][j].change_possibilities(a, false);
 	    }
-	    
+	    puzzle[i][j].change_possibilities(possible_num, true);
 	    changed_num = true;
 	  }
 	}
@@ -180,6 +184,110 @@ void SuDoku::check_box(int row, int column) {
       if (puzzle[i][j].get_is_solved() == true) {
 	puzzle[row][column].change_possibilities(puzzle[i][j].get_num(), false);
       }
+    }
+  }
+}
+
+void SuDoku::check_row_possibilities(int row, int column) {
+  for (int k = 1; k <= SuDoku::SIZE; ++k) {
+    bool cant_determine = false;
+    for (int j = 0; j < SuDoku::SIZE && cant_determine == false; ++j) {
+      if (j == column) {
+	continue;
+      }
+      const bool* p = puzzle[row][j].get_possibilities();
+      if (p[k] == true) {
+	cant_determine = true;
+      }
+    }
+    if (cant_determine == false) {
+      for (int a = 1; a <= SuDoku::SIZE; ++a) {
+	puzzle[row][column].change_possibilities(a, false);
+      }
+      puzzle[row][column].change_possibilities(k, true);
+      return;
+    }
+  }
+}
+
+void SuDoku::check_column_possibilities(int row, int column) {
+  for (int k = 1; k <= SuDoku::SIZE; ++k) {
+    bool cant_determine = false;
+    for (int i = 0; i < SuDoku::SIZE && cant_determine == false; ++i) {
+      if (i == row) {
+	continue;
+      }
+      const bool* p = puzzle[i][column].get_possibilities();
+      if (p[k] == true) {
+	cant_determine = true;
+      }
+    }
+    if (cant_determine == false) {
+      for (int a = 1; a <= SuDoku::SIZE; ++a) {
+	puzzle[row][column].change_possibilities(a, false);
+      }
+      puzzle[row][column].change_possibilities(k, true);
+      return;
+    }
+  }
+}
+
+void SuDoku::check_box_possibilities(int row, int column) {
+  int box_row = 0, box_column = 0;
+  switch (row) {
+  case 0:
+  case 1:
+  case 2:
+    box_row = 0;
+    break;
+  case 3:
+  case 4:
+  case 5:
+    box_row = 1;
+    break;
+  case 6:
+  case 7:
+  case 8:
+    box_row = 2;
+    break;
+  }
+  switch (column) {
+  case 0:
+  case 1:
+  case 2:
+    box_column = 0;
+    break;
+  case 3:
+  case 4:
+  case 5:
+    box_column = 1;
+    break;
+  case 6:
+  case 7:
+  case 8:
+    box_column = 2;
+    break;
+  }
+  const int ROWS_IN_BOX = 3;
+  const int COLUMNS_IN_BOX = 3;
+  int start_row = box_row * ROWS_IN_BOX;
+  int start_column = box_column * COLUMNS_IN_BOX;
+  for (int k = 1; k <= SuDoku::SIZE; ++k) {
+    bool cant_determine = false;
+    for (int i = start_row; i < start_row + ROWS_IN_BOX && cant_determine == false; ++i) {
+      for (int j = start_column; j < start_column + COLUMNS_IN_BOX && cant_determine == false; ++j) {
+	const bool* p = puzzle[i][j].get_possibilities();
+	if (p[k] == true) {
+	  cant_determine = true;
+	}
+      }
+    }
+    if (cant_determine == false) {
+      for (int a = 1; a <= SuDoku::SIZE; ++a) {
+	puzzle[row][column].change_possibilities(a, false);
+      }
+      puzzle[row][column].change_possibilities(k, true);
+      return;      
     }
   }
 }

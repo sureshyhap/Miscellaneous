@@ -26,6 +26,9 @@ class SuDoku {
   void check_row(int row, int column);
   void check_column(int row, int column);
   void check_box(int row, int column);
+  void check_row_possibilities(int row, int column);
+  void check_column_possibilities(int row, int column);
+  void check_box_possibilities(int row, int column);
   Cell puzzle[SIZE][SIZE];
 };
 
