@@ -172,11 +172,13 @@ void BinaryTree<T>::print_in_order() {
 }
 
 template <typename T>
-BinaryTree<T>::Node::Node(const T& data, Node* p, Node* l, Node* r) {
+BinaryTree<T>::Node::Node(const T& data, Node* p, Node* l, Node* r, int d_l, int d_r) {
   this->data = data;
   parent = p;
   left_child = l;
   right_child = r;
+  depth_left = d_l;
+  depth_right = d_r;
 }
 
 template <typename T>
