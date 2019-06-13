@@ -27,17 +27,17 @@ class BinaryTree {
   virtual bool remove(const T& element = T());
   void print_level_order();
   // Assumes there is at least a root /////////////////////////
-  void print_pre_order();
-  void print_post_order();
-  void print_in_order();
+  virtual void print_pre_order();
+  virtual void print_post_order();
+  virtual void print_in_order();
   struct Node {
-    friend class BinaryTree;
+    friend class BinaryTree<T>;
     // Default constructor
-    Node(const T& data, Node* p = nullptr, Node* l = nullptr, Node* r = nullptr);
+    Node(const T& data, Node* p = nullptr, Node* l = nullptr, Node* r = nullptr, int d_l = -1, int d_r = -1);
     T data;
-  protected:
     Node* parent;
     Node* left_child, * right_child;
+    int depth_left, depth_right;
   };
  protected:
   // Returns index of found element in tree vector or -1 if not found
@@ -47,9 +47,9 @@ class BinaryTree {
   void inorder(Node* subtree_root);
   // Nodes of the tree stored in level order traversal order
   std::vector<Node*> tree;
+  // Depth of root
   int depth;
 };
-
 #include "BinaryTree.cpp"
 
 // BINARYTREE_H

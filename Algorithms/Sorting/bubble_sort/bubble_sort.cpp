@@ -18,12 +18,17 @@ int main(int argc, char* argv[]) {
 
 void bubble_sort(int a[], int size) {
   for (int i = 1; i < size; ++i) {
+    bool swap = false;
     for (int j = 0; j < size - i; ++j) {
       if (a[j] > a[j + 1]) {
 	int temp = a[j];
 	a[j] = a[j + 1];
 	a[j + 1] = temp;
+	swap = true;
       }
+    }
+    if (!swap) {
+      break;
     }
   }
 }
