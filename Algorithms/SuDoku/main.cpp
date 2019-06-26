@@ -25,7 +25,9 @@ int main(int argc, char* argv[]) {
   std::cin >> s;
   std::ifstream infile(s);
   std::string row;
+  // The first top line is information about the puzzle
   getline(infile, row);
+  // Read from the file a representation of a puzzle
   for (int i = 0; i < SuDoku::SIZE; ++i) {
     getline(infile, row);
     std::istringstream is(row);
