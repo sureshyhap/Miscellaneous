@@ -5,8 +5,9 @@ SuDoku::SuDoku(int a[SuDoku::SIZE][SuDoku::SIZE]) {
   for (int i = 0; i < SuDoku::SIZE; ++i) {
     for (int j = 0; j < SuDoku::SIZE; ++j) {
       puzzle[i][j];
-      /////////////////      Cell puzzle[i][j];
+      // Input the number into the cell
       puzzle[i][j].change_num(a[i][j]);
+      // If number is nonzero, it is solved
       if (a[i][j] != 0) {
 	puzzle[i][j].change_is_solved(true);
 	puzzle[i][j].change_possibilities(a[i][j], true);
@@ -40,21 +41,26 @@ void SuDoku::print() const {
 }
 
 void SuDoku::solve() {
+  // Will check if a change was made to the puzzle on a pass over all the cells
   bool changed_num_or_poss = true;
   while (changed_num_or_poss == true) {
     changed_num_or_poss = false;
     for (int i = 0; i < SuDoku::SIZE; ++i) {
       for (int j = 0; j < SuDoku::SIZE; ++j) {
 	if (puzzle[i][j].get_is_solved() == false) {
+	  // An array of booleans telling whether a number is
+	  // possible for the cell (before checks and changes
+	  // to possibilities are made)
 	  const bool* poss_before = puzzle[i][j].get_possibilities();
 	  check_row(i, j);
 	  check_column(i, j);
 	  check_box(i, j);
-	  ///////////////////////////////////////////////
 	  check_row_possibilities(i, j);
 	  check_column_possibilities(i, j);
-	  check_box_possibilities(i, j);	  
-	  ///////////////////////////////////////////////
+	  check_box_possibilities(i, j);
+	  // An array of booleans telling whether a number is
+	  // possible for the cell (after checks and changes
+	  // to possibilities are made)
 	  const bool* poss_after = puzzle[i][j].get_possibilities();
 	  for (int i = 1; i <= SuDoku::SIZE; ++i) {
 	    // A possibility has been changed
@@ -81,16 +87,11 @@ void SuDoku::solve() {
 	      puzzle[i][j].change_possibilities(a, false);
 	    }
 	    puzzle[i][j].change_possibilities(possible_num, true);
-	    ////////////////////// Have to change deciding to loop again
-	    // based on a cell's number being found to looping again because
-	    // a cell's possibilities being changed/////////////////////////
-	    ///////////// This is likely the error! //////////////////////
 	    changed_num_or_poss = true;
 	  }
 	}
       }
     }
-    ///////////// Past 1st for loop
   }
 }
 
@@ -229,7 +230,7 @@ void SuDoku::check_row_possibilities(int row, int column) {
 	continue;
       }
       const bool* p = puzzle[row][j].get_possibilities();
-      // If k is a possiblity in a different cell, can't zero
+      // If k is a possibility in a different cell, can't zero
       // in on it for the Cell corresponding to the row and
       // column passed in
       if (p[k] == true) {
@@ -262,7 +263,7 @@ void SuDoku::check_column_possibilities(int row, int column) {
 	continue;
       }
       const bool* p = puzzle[i][column].get_possibilities();
-      // If k is a possiblity in a different cell, can't zero
+      // If k is a possibility in a different cell, can't zero
       // in on it for the Cell corresponding to the row and
       // column passed in
       if (p[k] == true) {
@@ -336,7 +337,7 @@ void SuDoku::check_box_possibilities(int row, int column) {
 	  continue;
 	}
 	const bool* p = puzzle[i][j].get_possibilities();
-	// If k is a possiblity in a different cell, can't zero
+	// If k is a possibility in a different cell, can't zero
 	// in on it for the Cell corresponding to the row and
 	// column passed in
 	if (p[k] == true) {

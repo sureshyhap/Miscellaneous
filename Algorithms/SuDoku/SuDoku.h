@@ -21,14 +21,20 @@ class SuDoku {
   protected:
     int num;
     bool is_solved;
+    // 1 - indexed (Not 0 - indexed)
+    // possibilities[0] is not used
     bool possibilities[SIZE + 1];
   };
+  // Checks using other numbers in the row/column/box
   void check_row(int row, int column);
   void check_column(int row, int column);
   void check_box(int row, int column);
+  // Checks using possibilities in the other cells
+  // in the row, column, box
   void check_row_possibilities(int row, int column);
   void check_column_possibilities(int row, int column);
   void check_box_possibilities(int row, int column);
+  // The actual puzzle itself
   Cell puzzle[SIZE][SIZE];
 };
 
