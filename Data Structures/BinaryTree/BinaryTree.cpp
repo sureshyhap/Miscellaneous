@@ -43,12 +43,9 @@ T& BinaryTree<T>::access(int level, int position) {
   catch (const char* msg) {
     std::cerr << msg << std::endl;
   }
-  ///////////////////////////////////////////////////////////////////////////////////
-  // Fix the return value for this case.     //
-  // If the tree is empty, there is no root! //
-  ///////////////////////////////////////////////////////////////////////////////////
-  
-  return tree[0]->data;
+  if (!tree.empty()) {
+    return tree[0]->data;
+  }
 }
 
 template <typename T>
@@ -146,19 +143,26 @@ bool BinaryTree<T>::remove(const T& element) {
 template <typename T>
 void BinaryTree<T>::print_level_order() {
   int size = tree.size();
-  for (int i = 0; i < size; ++i) {
+  for (int i = 0, pow2 = 1; i < size; ++i) {
     if (tree[i]) {
       std::cout << tree[i]->data << " ";
     }
     else {
-      std::cout << T() << " "; ////////////////////////////
+      std::cout << T() << " ";
+    }
+    // Line break here
+    if (i + 2 == int(pow(2, pow2))) {
+      std::cout << std::endl;
+      ++pow2;
     }
   }
 }
 
 template <typename T>
 void BinaryTree<T>::print_pre_order() {
-  preorder(tree.front());
+  if (!tree.empty()) {
+    preorder(tree.front());
+  }
 }
 
 template <typename T>

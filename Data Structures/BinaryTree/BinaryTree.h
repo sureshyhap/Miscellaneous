@@ -26,7 +26,7 @@ class BinaryTree {
   // Remove element from the tree
   virtual bool remove(const T& element = T());
   void print_level_order();
-  // Assumes there is at least a root /////////////////////////
+  // Assumes there is at least a root
   void print_pre_order();
   void print_post_order();
   void print_in_order();
