@@ -10,7 +10,10 @@ SuDoku::SuDoku(int a[SuDoku::SIZE][SuDoku::SIZE]) {
       // If number is nonzero, it is solved
       if (a[i][j] != 0) {
 	puzzle[i][j].change_is_solved(true);
-	puzzle[i][j].change_possibilities(a[i][j], true);
+	for (int k = 1; k <= SuDoku::SIZE; ++k) {
+	  puzzle[i][j].change_possibilities(k, false);
+	}
+	puzzle[i][j].change_possibilities(a[i][j], true);	
       }
     }
   }
