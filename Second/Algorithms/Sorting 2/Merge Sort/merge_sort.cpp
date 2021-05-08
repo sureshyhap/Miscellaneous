@@ -14,16 +14,17 @@ void merge_sort(std::vector<T>& v, std::vector<T>& temp, int start, int end) {
       while (v[i] <= v[j]) {
 	temp[k++] = v[i++];
 	if (i > mid) {
-	  break;
+	  goto outside;
 	}
       }
       while (v[i] > v[j]) {
 	temp[k++] = v[j++];
 	if (j > end) {
-	  break;
+	  goto outside;
 	}
       }
     }
+  outside:
     while (j <= end) {
       temp[k++] = v[j++];
     }
