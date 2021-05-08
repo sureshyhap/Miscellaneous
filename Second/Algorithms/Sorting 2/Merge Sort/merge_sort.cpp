@@ -11,20 +11,13 @@ void merge_sort(std::vector<T>& v, std::vector<T>& temp, int start, int end) {
     merge_sort(v, temp, mid + 1, end);
     int i = start, j = mid + 1, k = start;
     while (i <= mid and j <= end) {
-      while (v[i] <= v[j]) {
+      if (v[i] <= v[j]) {
 	temp[k++] = v[i++];
-	if (i > mid) {
-	  goto outside;
-	}
       }
-      while (v[i] > v[j]) {
+      else {
 	temp[k++] = v[j++];
-	if (j > end) {
-	  goto outside;
-	}
       }
     }
-  outside:
     while (j <= end) {
       temp[k++] = v[j++];
     }
