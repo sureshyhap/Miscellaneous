@@ -25,5 +25,3 @@ void insertion_sort(std::vector<T>& v) {
     v[new_spot] = present_element;
   }
 }
-
-template void insertion_sort<int>(std::vector<int>& v);

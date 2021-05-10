@@ -3,6 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 
+const int INSERTION_SORT_CUTOFF = 4;
+
+template <typename T>
+void insertion_sort(std::vector<T>& v);
+
 template <typename T>
 inline void swap(T& first, T& second) {
   T temp = first;
@@ -11,26 +16,45 @@ inline void swap(T& first, T& second) {
 }
 
 template <typename T>
-void quick_sort(std::vector<T>& v, int start, int end) {
-  if (start < end) {
-    int mid = (start + end) / 2;
-    swap(v[mid], v[end]);
-    int i = start - 1, j = end;
-    while (i < j) {
-      while (v[++i] < v[end]) {
-	;
-      }
-      while (v[--j] > v[end] and j > i) {
-	;
-      }
-      if (i < j) {
-	swap(v[i], v[j]);
-      }
-    }
-    swap(v[i], v[end]);
-    quick_sort(v, start, i - 1);
-    quick_sort(v, i + 1, end);
+int median_of_three(std::vector<T>& v, int start, int end) {
+  int mid = (start + end) / 2;
+  if (v[mid] < v[start]) {
+    swap(v[mid], v[start]);
   }
+  if (v[end] < v[mid]) {
+    swap(v[end], v[mid]);
+  }
+  if (v[mid] < v[start]) {
+    swap(v[mid], v[start]);
+  }
+  return mid;
+}
+
+template <typename T>
+void quick_sort(std::vector<T>& v, int start, int end) {
+ beginning:
+  if (end - start <= INSERTION_SORT_CUTOFF) {
+    insertion_sort(v);
+    return;
+  }
+  int mid = median_of_three(v, start, end);
+  swap(v[mid], v[end - 1]);
+  int i = start, j = end - 1;
+  while (i < j) {
+    while (v[++i] < v[end]) {
+      ;
+    }
+    while (v[--j] > v[end] and j > i) {
+      ;
+    }
+    if (i < j) {
+      swap(v[i], v[j]);
+    }
+  }
+  swap(v[i], v[end - 1]);
+  quick_sort(v, start, i - 1);
+  start = i + 1;
+  goto beginning;
 }
 
 template <typename T>
@@ -41,7 +65,7 @@ void quick_sort(std::vector<T>& v) {
 
 int main(int argc, char* argv[]) {
   std::vector<int> v;
-  for (int i = 0; i < 25; ++i) {
+  for (int i = 0; i < 50; ++i) {
     unsigned int seed = i + time(NULL);
     srand(seed);
     v.push_back((rand() / 100) % 20);
