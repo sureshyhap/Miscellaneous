@@ -4,29 +4,25 @@
 #include <ctime>
 
 template <typename T>
-inline void swap(T& first, T& second) {
-  T temp = first;
-  first = second;
-  second = temp;
-}
-
-template <typename T>
-void selection_sort(std::vector<T>& v) {
+void insertion_sort(std::vector<T>& v) {
   int size = v.size();
-  if (!size or size == 1) {
-    return;
-  }
-  T min = {};
-  for (int i = 0; i < size; ++i) {
-    min = v[i];
-    int min_index = i;
-    for (int j = i + 1; j < size; ++j) {
-      if (v[j] < min) {
-	min = v[j];
-	min_index = j;
+  T present_element = {};
+  int new_spot = {};
+  for (int i = 1; i < size; ++i) {
+    present_element = v[i];
+    for (int j = i - 1; j >= 0; --j) {
+      if (v[j] > present_element) {
+	v[j + 1] = v[j];
+	if (!j) {
+	  new_spot = 0;
+	}
+      }
+      else {
+	new_spot = j + 1;
+	break;
       }
     }
-    swap(v[i], v[min_index]);
+    v[new_spot] = present_element;
   }
 }
 
@@ -41,7 +37,7 @@ int main(int argc, char* argv[]) {
     std::cout << elem << " ";
   }
   std::cout << '\n';
-  selection_sort(v);
+  insertion_sort(v);
   for (auto elem : v) {
     std::cout << elem << " ";
   }

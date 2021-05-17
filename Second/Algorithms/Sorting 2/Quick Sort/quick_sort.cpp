@@ -41,10 +41,10 @@ void quick_sort(std::vector<T>& v, int start, int end) {
   swap(v[mid], v[end - 1]);
   int i = start, j = end - 1;
   while (i < j) {
-    while (v[++i] < v[end]) {
+    while (v[++i] < v[end - 1]) {
       ;
     }
-    while (v[--j] > v[end] and j > i) {
+    while (v[--j] > v[end - 1] and j > i) {
       ;
     }
     if (i < j) {
