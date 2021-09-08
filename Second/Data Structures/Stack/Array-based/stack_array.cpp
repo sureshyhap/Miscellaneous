@@ -47,6 +47,7 @@ template <typename T>
 Stack<T>::~Stack() {
   delete [] data;
   data = {nullptr};
+  size = capacity = 0;
 }
 
 template <typename T>

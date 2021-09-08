@@ -48,17 +48,19 @@ template <typename T>
 Queue<T>::~Queue() {
   delete [] data;
   data = {nullptr};
+  first = last = 0;
+  size = capacity = 0;
 }
 
 template <typename T>
 Queue<T>& Queue<T>::operator=(const Queue& other) {
-  first = {other.first};
-  last = {other.last};
+  first = {0};
+  last = {-1 + other.size};
   size = {other.size};
   capacity = {other.capacity};
   data = new T[capacity];
   for (int i {0}; i < size; ++i) {
-    data[i] = other.data[i];
+    data[i] = other.data[(i + other.first) % other.capacity];
   }
 }
 
