@@ -17,6 +17,9 @@ BinaryTree<T>::BinaryTree(const BinaryTree& bt) {
 
 template <typename T>
 BinaryTree<T>::~BinaryTree() {
+  for (auto& elem : tree) {
+    delete elem;
+  }
 }
 
 template <typename T>
