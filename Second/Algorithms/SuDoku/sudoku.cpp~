@@ -1,0 +1,26 @@
+#include "sudoku.h"
+#include <iostream>
+
+SuDoku::SuDoku(int puzzle_board[][DIMENSION]) {
+  for (int i = 0; i < DIMENSION; ++i) {
+    for (int j = 0; j < DIMENSION; ++j) {
+      board[i][j] = puzzle_board[i][j];
+    }
+  }
+}
+
+void SuDoku::print_puzzle() {
+  std::cout << "|----------------------------------------------\n";
+  for (int i = 0; i < DIMENSION; ++i) {
+    std::cout << '|';
+    for (int j = 0; j < DIMENSION; ++j) {
+      std::cout << board[i][j] << ' ';
+    }
+    std::cout << '|';
+    std::cout << '\n';
+    std::cout << "----------------------------------------------\n";
+  }
+}
+
+
+
